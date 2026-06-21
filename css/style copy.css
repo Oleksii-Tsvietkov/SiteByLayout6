@@ -1,0 +1,287 @@
+:root{
+    --white-clr: #ffffff;
+    --slack-clr: #2D333A;
+    --nav-clr: #6D6F7B;
+    --light-blue-clr: #5B77C4;
+    --blue-clr: #3F46AD;
+    --dark-blue-clr: #1C299D;
+    --light-grey-clr: #F5F5F5;
+    --border-hover-clr: #9BA0D3;
+    --thin-line-clr: #EBEBEB;
+    --header-clr: #323648;
+    --text-clr: #5b5E6d;
+    --border-thin: 1px solid var(--thin-line-clr);
+}
+@media screen and (max-width: 640px){
+    main{
+        background-color: yellow;
+    }
+}
+@media screen and (max-width: 1024px){
+    nav{
+        display: none; 
+    }
+}
+html{    /*temporary*/
+    height: 100%;
+    width: 100%;
+}
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-rows: 70px 760px 520px;
+    grid-template-columns: 1fr;
+    font-family: sans-serif;
+    align-items: stretch;
+}
+header, footer, .logo, .logo span, nav, nav ul, h1, .container, .logotypes, button, input{    /*check*/
+    overflow: hidden; 
+}
+header{
+    grid-area: header;
+    width: 100%;
+    display: grid;
+    position: sticky;
+    grid-template-areas: "logo navigation";
+    grid-template-columns: 100px 670px;
+    grid-template-rows: 100%;
+    column-gap: 480px;
+    align-content: center;    /*dont work*/
+    justify-content: center;
+    background-color: var(--white-clr);
+    border-bottom: var(--border-thin);
+    top: 0;
+}
+.logo{
+    grid-area: logo;
+    /*width: 100px;*/
+    display: grid;
+    grid-template-areas: "logotype name";
+    /*grid-template-columns: 25px auto;
+    grid-template-columns: 25px auto;*/
+    justify-self: end;
+    align-content: center;
+}
+.logo img{
+    grid-area: logotype;
+    height: 25px;
+    justify-self: end;
+}
+.logo span{    /*заменить на <a>*/
+    grid-area: name;    /**/
+    height: min-content;
+    line-height: 21px;
+    margin-left: 5px;
+    /*font-size: 28px;    /*не работает*/
+    font-size: 1.7em;
+    font-weight: bolder;
+    color: var(--slack-clr);    
+}
+nav{
+    grid-area: navigation;
+    /*width: 670px;*/
+    color: var(--nav-clr);
+}
+nav ul{
+    /*height: 100%;    /*не нужно?*/
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+nav li:last-child a{
+    border: 1px solid var(--slack-clr);
+    border-radius: 4px;
+    transition: all 300ms;
+}
+nav li{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    padding: 7px;
+    user-select: none;
+    font-weight: 400;
+}
+nav a:hover{
+    color: var(--blue-clr);
+}
+nav li:last-child a:hover{
+    border-color: var(--border-hover-clr);
+}
+nav li a{
+    width: max-content;
+    /*height: 40px;    /*Не нужно?*/
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+main{
+    grid-area: main;
+    display: grid;
+    grid-template-areas: "decoration content1";
+    grid-template-rows: 600px;
+    grid-template-columns: 760px 600px;
+    align-content: center;
+    align-items: stretch;
+    justify-content: center;
+}
+#decoration{
+    grid-area: decoration;
+}
+#content{
+    grid-area: content1;
+}
+main img{
+    /*height: 600px;    /*не нужно?*/
+}
+h1, h2{
+    font-family: serif;
+    color: var(--header-clr);
+}
+h1{
+    height: 165px;
+    margin: 0;
+    font-size: 5em;
+    font-weight: 900;
+    line-height: 80px;
+    text-transform: capitalize;
+}
+p{
+    color: var(--text-clr);
+}
+#content p{
+    font-size: 1.3em;
+    font-weight: 400;
+    line-height: 1.5;
+}
+input, button{
+    height: 57px;
+    border: none;
+    border-radius: 4px;
+} 
+form{
+    display: grid;
+    grid-template-columns: 340px 171px;
+    column-gap: 8px;
+}
+form input{
+    padding: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 0 0 1px var(--thin-line-clr);
+    cursor: text;
+}
+:is(form) input:active, input:focus{
+    box-shadow: 0 0 0 1px var(--blue-clr);
+    outline: none;
+}
+button{
+    padding: 19px 40px 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;    /*сократить*/
+}
+form button{
+    background-color: var(--blue-clr);
+    color: var(--white-clr);
+    transition: background-color 400ms;
+}
+form button:hover{
+    background-color: var(--dark-blue-clr);
+}
+form button:focus{
+    background-color: var(--light-blue-clr);
+    outline: none;
+}
+form span{
+    font-size: 0.9em;
+    margin-top: 16px;
+    font-weight: 100;
+}
+form span a{
+    color: var(--blue-clr);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+}
+footer{
+    grid-area: footer;  
+    background-color: var(--light-grey-clr);    /**/
+    display: grid;
+    grid-template-areas: 
+        "container"
+        "logotypes";
+    grid-template-rows: 199px 227px;
+    grid-template-columns: 1230px;
+    align-content: center;
+    justify-content: center;
+}
+.container{
+    grid-area: container;
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
+.container h2, p{
+    margin-top: 0;
+    box-sizing: border-box;    /*сократить*/
+}
+.container h2{
+    margin-bottom: 16px;
+    font-size: 2em;
+}
+.container p, button{
+    margin-bottom: 32px;
+}
+.container button{
+    /*width: 188px;    /*не нужно!*/
+    justify-self: center;
+    background-color: var(--white-clr);
+    color: var(--dark-blue-clr);
+    box-shadow: 0 0 0 1px var(--light-blue-clr);
+    transition: all 400ms;
+}
+.container button:hover{
+    box-shadow: 0 0 0 2px var(--blue-clr);
+}
+:is(.container) button:active, button:focus{
+    background-color: var(--blue-clr);
+    color: var(--white-clr);
+}
+.logotypes{
+    grid-area: logotypes;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+}
+figure{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+figure:nth-child(-n+3){
+    border-bottom: var(--border-thin);
+}
+figure:nth-child(2),
+figure:nth-child(5){
+    border-left: var(--border-thin);
+    border-right: var(--border-thin);
+}
+figure img{
+    max-width: 170px;
+    min-width: 120px;
+    max-height: 52px;
+    min-height: 21px;
+    width: fit-content;
+    height: fit-content;
+}
