@@ -1,5 +1,6 @@
 :root{
     --white-clr: #ffffff;
+    --black-clr: #000000;
     --slack-clr: #2D333A;
     --nav-clr: #6D6F7B;
     --light-blue-clr: #5B77C4;
@@ -11,100 +12,156 @@
     --header-clr: #323648;
     --text-clr: #5b5E6d;
     --border-thin: 1px solid var(--thin-line-clr);
+    --short-drt: 300ms;
+    --mid-drt: 400ms;
+    --hr-size: 0.9mm;
 }
 @media screen and (max-width: 1250px){    /*125*/
     .header-wrapper, .main-wrapper, .footer-wrapper{
-        padding: 0 4vw;
-    }
-    .main-wrapper #decoration{
-        height: 500px;
+        padding: 0 8vw;
     }
 }
 @media screen and (max-width: 1024px){    /*150*/
-    header nav{
-        display: none;
+    header .header-wrapper{
+        nav{
+            display: flex;
+            justify-content: flex-start;
+            width: 150px;
+            position: fixed;
+            top: 0;
+            right: -152px;
+            background-color: var(--white-clr);
+            border: 1px solid var(--nav-clr);
+            border-radius: 4px;
+            transition: var(--mid-drt);    /*ToDo: fix*/
+        }
+        .hidden-nav{
+            display: block;
+        }
     }
-    header .hidden-nav{
-        display: block;
+    nav ul{ 
+        display: grid;    
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
+        align-items: flex-end;
+        padding-top: 38px;
+        li{
+            padding: 15px;
+        }
     }
     main .main-wrapper{
         grid-template-columns: 40% 48%;
-    }
-    .main-wrapper #content{
-        padding: 0;
+        .main-content{
+            padding: 0;
+        }
     }
 }
 @media screen and (max-width: 900px){    /*175*/
     body main{
-        padding: 40px 0 0;
+        padding: 15vh 0 0;
         align-content: flex-start;
         grid-template-columns: 100%;
         grid-template-rows: 100%;
-    }
-    main .main-wrapper{
-        width: 100%;
-        grid-template-areas: 
-            "content1"    
-            "decoration";
-        grid-template-columns: 100%;
-        grid-template-rows: auto 300px;
-    }
-    .main-wrapper #decoration{
-        height: 300px;
+        .main-wrapper{
+            grid-template-areas: 
+                "main-content"    
+                "main-illustration";
+            grid-template-columns: 100%;
+            grid-template-rows: 55% 45%;
+        }
     }
     body footer{
         height: 600px;
-        padding-top: 20vh;
-        align-items: flex-start;
+        padding: 48px 0;
+        align-items: stretch;
     }
     footer .footer-wrapper{
         grid-template-rows: 36% 64%;
+        .logotypes{
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+        }
     }
-    .footer-wrapper .logotypes{
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
+    .logotypes figure:nth-child(2){
+        border-right: none;
+    }
+    .logotypes figure:nth-child(5){
+        border-left: none;
     }
     figure:nth-child(4){ 
-    border-left: var(--border-thin);
-    border-bottom: var(--border-thin);
-}
+        border-left: var(--border-thin);
+        border-bottom: var(--border-thin);
+    }
 }
 @media screen and (max-width: 800px){    /*200*/
-    #content{
-        font-size: 14px;
+    body main .main-wrapper{
+        grid-template-rows: 64% 36%;
     }
-    #content h1{
-        font-size: 4.3em;
+    main .main-content{
+        font-size: 14px;
+        h1{
+            font-size: 11vw;
+            line-height: normal;
+        }
     }
 }
 @media screen and (max-width: 640px){    /*250*/
+    body header{
+        position: static;
+        .header-wrapper nav{
+            position: absolute;
+        }
+    }
+    main .main-wrapper{
+        grid-template-rows:70% 30%;
+        form{
+            grid-template-columns: 100%;
+            grid-template-rows: repeat(2, 1fr);
+            row-gap: 15px;
+        }
+        span{
+            text-align: center;
+        }
+    }
     body footer{
         height: 900px;
         padding-top: 15vh;
-    }
-    footer .footer-wrapper{
-        grid-template-rows: 25% 75%;
+        .footer-wrapper{
+            grid-template-rows: 25% 75%;
+            h2{
+                font-size: 15vh;
+                margin: 8vh 0;
+            }
+        }
     }
     .footer-wrapper .logotypes{
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr;
-    }
-    .footer-wrapper .logotypes figure{
-        border-left: none;
-        border-right: none;
+        grid-template-rows: repeat(4, 1fr);
+        figure{
+            border-left: none;
+            border-right: none;
+        }
     }
     figure:nth-child(5){
         border-bottom: var(--border-thin);
     }
 }
-html{    /*temporary*/
-    height: 100%;
-    width: 100%;
+@media screen and (max-width: 525px){    /*300*/
+    body main{
+        padding: 0;
+    }
+}
+.site-container{
+    max-width: 1230px;
+}
+.brdr-box{
+    box-sizing: border-box;
 }
 body{
     height: 100%;
     width: 100%;
     margin: 0;
+    overflow-x: hidden;
     display: grid;
     grid-template-areas:
         "header"
@@ -113,15 +170,12 @@ body{
     grid-template-rows: 70px 760px 520px;
     grid-template-columns: 100%;
     font-family: sans-serif;
-    align-items: stretch;
 }
-header, footer, .logo, .logo span, nav, nav ul, .main-wrapper, .decoration, .content1, h1, .text-wrapper, .logotypes, button, input{    
-    /*check*/
+header, footer, nav, nav ul, .main-wrapper, .main-illustration, h1, .text-wrapper, .logotypes, button, input{    /*check*/
     overflow: hidden; 
 }
 header{
     grid-area: header;
-    width: 100%;
     display: flex;
     position: sticky;
     justify-content: center;
@@ -131,156 +185,142 @@ header{
     top: 0;
 }
 .header-wrapper{
-    max-width: 1230px;
-    width: 100%;
+        width: 100%;    
     display: grid;
     grid-template-areas: "logo navigation";
     grid-template-columns: 100px auto;
-    grid-template-rows: 100%;
-    box-sizing: border-box;
+}
+.pointer{
+    cursor: pointer;
+}
+:any-link{
+    text-decoration: none;
 }
 .logo{
     grid-area: logo;
-    width: 100%;    /*temporary*/
     display: grid;
-    grid-template-areas: "logotype name";
-    /*grid-template-columns: 25px auto;
-    grid-template-columns: 25px auto;*/
-    justify-self: end;
+    grid-template-areas: "logotype brand-name";
     align-content: center;
-}
-.logo img{
-    grid-area: logotype;
-    height: 25px;
-    justify-self: end;
-}
-.logo span{    /*заменить на <a>*/
-    grid-area: name;    /**/
-    height: min-content;
-    line-height: 21px;
-    margin-left: 5px;
-    /*font-size: 28px;    /*не работает*/
-    font-size: 1.7em;
-    font-weight: bolder;
-    color: var(--slack-clr);    
+    img{
+        grid-area: logotype;
+        height: 25px;
+        justify-self: end;
+    }
+    a{
+        grid-area: brand-name;
+        height: min-content;
+        line-height: 21px;
+        margin-left: 5px;
+        font-size: 1.7em;
+        font-weight: bolder;
+        color: var(--slack-clr);    
+    }
 }
 nav{
-    width: 100%;    /*temporary*/
     grid-area: navigation;
     display: flex;
     align-items: center;
     color: var(--nav-clr);
     justify-content: flex-end;
+    ul{
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
 }
-nav ul{
-    /*height: 100%;    /*не нужно?*/
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-nav li:last-child a{
-    box-shadow: 0 0 0 1px var(--slack-clr);
-    border-radius: 4px;
-    transition: all 300ms;
+nav li:last-child{
+    padding: 7px;
+    a{
+        padding: 10px;
+        box-shadow: 0 0 0 1px var(--slack-clr);
+        border-radius: 4px;
+        transition: all var(--short-drt);
+    }
 }
 nav li{
-    width: fit-content;
     display: flex;
-    align-items: center;
-    padding: 7px;
+    padding: 17px;
     user-select: none;
     font-weight: 400;
+    a{
+        color: var(--nav-clr);
+    }
 }
 nav a:hover{
     color: var(--blue-clr);
 }
-nav li:last-child a:hover{
-    border-color: var(--border-hover-clr);
-}
-nav li a{
-    width: max-content;
-    /*height: 40px;    /*Не нужно?*/
-    height: 100%;
-    box-sizing: border-box;
-    padding: 10px;
-    text-decoration: none;
-    cursor: pointer;
+nav li:last-child:has(a:hover) a{
+    box-shadow: 0 0 0 1px var(--border-hover-clr);
 }
 .hidden-nav{
     display: none;
     width: 24px;
-    height: 18px;
+    height: 17px;
     justify-self: flex-end;
     align-self: center;
+    outline: none;
+    transition-duration: var(--mid-drt);
+    left: 0;
 }
-.hidden-nav hr{    /*закончить*/
-    height: 3px;
+.hidden-nav:focus{    /*ToDo: fix*/
+    position: relative;
+    left: clamp(-85px, 1vh, -28px);
+    left: calc(-100px/1vw);
+}
+header:has(.hidden-nav:focus) nav{
+    right: 0;
+}
+.hidden-nav hr{ 
+    height: var(--hr-size);
     margin: 0;
-    background-color: var(--nav-clr);
+    background-color: var(--slack-clr);
+    border: none;
 }
 .hidden-nav hr:nth-child(2){
-    margin: 3px 0;
+    margin: var(--hr-size) 0;
 }
 main{
     grid-area: main;
     display: grid;
+    padding-top: 80px;
     grid-template-rows: 600px;
-    align-content: center;
     justify-content: center;    
-    padding: 60px 0 64px;    /*temporary*/
 }
 .main-wrapper{
-    /*grid-row-start: 1;
-    grid-row-end: 2;    /*мб не нужно*/
-    max-width: 1300px;    /*сократить*/
-    min-width: 100%;   
+    max-width: 1300px;
     display: grid;
-    grid-template-areas: "decoration content1";
+    grid-template-areas: "main-illustration main-content";
     grid-template-rows: 600px;
     grid-template-columns: 50% 46.154%;
     justify-content: space-between;
-    box-sizing: border-box;
 }
-#decoration{
-    grid-area: decoration;
-    max-width: 100%;
-    width: 700px;    /*temporary*/
-    min-width: 100%;
+#main-illustration{
+    grid-area: main-illustration;
     background-image: url(../images/slack-illustration.png);
     background-repeat: no-repeat;
     background-position: center top;
     background-size: contain; 
 }
-#content{    /*rename*/
-    grid-area: content1;    /*rename*/
-    max-width: 100%;
-    width: 600px;    /*temporary*/
-    min-width: 100%;
-    box-sizing: border-box;
+.main-content{
+    grid-area: main-content;
     padding-right: 24px;
-}
-main img{
-    width: 100%;
 }
 h1, h2{
     font-family: serif;
     color: var(--header-clr);
 }
 h1{
-    /*height: 165px;*/
     margin: 0;
     font-size: 5em;
-    font-weight: 900;
     line-height: 85px;
     text-transform: capitalize;
 }
 p{
     color: var(--text-clr);
 }
-#content p{
+.main-content p{
     font-size: 1.3em;
-    font-weight: 400;
     line-height: 1.5;
     margin: 32px 0;
 }
@@ -290,17 +330,19 @@ input, button{
     border-radius: 4px;
 } 
 form{
-    height: 57px;
     display: grid;
     grid-template-columns: 60% 30%;
-    grid-template-rows: 100%;    /*temporary*/
     column-gap: 8px;
-}
-form input{
-    padding: 15px;
-    box-sizing: border-box;
-    box-shadow: 0 0 0 1px var(--thin-line-clr);
-    cursor: text;
+    input{
+        padding: 15px;
+        box-shadow: 0 0 0 1px var(--thin-line-clr);
+        cursor: text;
+    }
+    button{
+        background-color: var(--blue-clr);
+        color: var(--white-clr);
+        transition: background-color var(--mid-drt);
+    }
 }
 form :is(input:active, input:focus){
     box-shadow: 0 0 0 1px var(--blue-clr);
@@ -312,12 +354,6 @@ button{
     font-weight: 700;
     text-transform: uppercase;
     white-space: nowrap;
-    cursor: pointer;    /*сократить*/
-}
-form button{
-    background-color: var(--blue-clr);
-    color: var(--white-clr);
-    transition: background-color 400ms;
 }
 form button:hover{
     background-color: var(--dark-blue-clr);
@@ -326,27 +362,26 @@ form button:focus{
     background-color: var(--light-blue-clr);
     outline: none;
 }
-#content span{
+.main-content span{
     display: inline-block;
+    width: 100%;
     font-size: 0.9em;
-    margin-top: 16px;
+    margin: 15px 0;
     font-weight: 100;
     color: var(--text-clr);
-}
-#content span a{
-    color: var(--light-blue-clr);
-    text-decoration: none;
-    border-bottom: 1px solid currentColor;
+    a{
+        color: var(--light-blue-clr);
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+    }
 }
 footer{
     grid-area: footer;  
     background-color: var(--light-grey-clr);
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 .footer-wrapper{
-    max-width: 1230px;    /*сократить*/
     width: 100%;
     display: grid;
     grid-template-areas: 
@@ -355,43 +390,37 @@ footer{
     grid-template-rows: 47% 53%;
     grid-template-columns: 100%;
     justify-items: stretch;
-    box-sizing: border-box;
 }
-.text-wrapper{    /*разделить классы, убрать margin?*/
-    max-width: 1230px;
+.text-wrapper{ 
     grid-area: container;
     display: grid;
-    /*grid-template-rows: 47px 69px 90px;*/
-    grid-template-rows: 20% 35% 45%;
+    grid-template-rows: 5fr 6fr 9fr;
     justify-content: stretch;
     text-align: center;
-}
-.text-wrapper h2, p button{
-    margin-top: 0;
-}
-.text-wrapper h2{
-    font-size: 2.3em;
-}/*
-.text-wrapper :is(p, button){
-    margin-bottom: 32px;
-}*/
-.text-wrapper button{
-    /*width: 188px;    /*не нужно!*/
-    justify-self: center;
-    background-color: var(--white-clr);
-    color: var(--dark-blue-clr);
-    box-shadow: 0 0 0 1px var(--light-blue-clr);
-    transition: all 400ms;
-}
-.text-wrapper button:hover{
-    box-shadow: 0 0 0 2px var(--blue-clr);
+    h2{
+        font-size: 2.3em;
+        margin: 40px 0 16px;
+    }
+    button{
+        justify-self: center;
+        background-color: var(--white-clr);
+        color: var(--dark-blue-clr);
+        box-shadow: 0 0 0 1px var(--light-blue-clr);
+        transition: all var(--mid-drt);
+    }
+    button, p{
+        margin-top: 0;
+    }
+    button:hover{
+        box-shadow: 0 0 0 2px var(--blue-clr);
+    }
 }
 .text-wrapper :is(button:active, button:focus){
     background-color: var(--blue-clr);
     color: var(--white-clr);
+    outline: none;
 }
 .logotypes{
-    max-width: 1230px;
     width: 100%;
     grid-area: logotypes;
     display: grid;
@@ -399,26 +428,24 @@ footer{
     grid-template-columns: repeat(3, 1fr);
 }
 figure{
-    box-sizing: border-box;
     margin: 0;
     padding: 32px;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
+    img{
+        max-width: 170px;
+        max-height: 52px;
+        width: fit-content;
+        height: fit-content;
+    }
 }
 figure:nth-child(-n+3){
     border-bottom: var(--border-thin);
 }
 figure:nth-child(2),
-figure:nth-child(5){    /*fix*/
+figure:nth-child(5){
     border-left: var(--border-thin);
     border-right: var(--border-thin);
-}
-figure img{
-    max-width: 170px;
-    min-width: 120px;
-    max-height: 52px;
-    min-height: 21px;
-    width: fit-content;
-    height: fit-content;
 }
